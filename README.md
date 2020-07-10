@@ -1,4 +1,4 @@
-
+![Picture It Logo](picture-it-logo.png)
 
 # Picture It
 
