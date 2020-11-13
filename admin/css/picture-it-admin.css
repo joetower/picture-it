@@ -2,3 +2,15 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+ .info-box {
+   padding: 2rem;
+ }
+
+ .defaults {
+   padding: 2rem;
+ }
+
+ .breakpoint-group__wrap {
+   border-top: 0.5rem solid #333333;
+ }

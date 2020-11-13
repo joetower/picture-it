@@ -1,15 +1,4 @@
 <?php
-
-/**
- * The admin-specific functionality of the plugin.
- *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Picture_It
- * @subpackage Picture_It/admin
- */
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -20,6 +9,7 @@
  * @subpackage Picture_It/admin
  * @author     Your Name <email@example.com>
  */
+
 class Picture_It_Admin {
 
 	/**
@@ -100,4 +90,372 @@ class Picture_It_Admin {
 
 	}
 
+	/**
+	 * Add Admin Menu for plugin
+	 * 
+	 */
+
+	 public function add_admin_menu() {
+
+		// Top Level Menu
+		// add_menu_page(
+		// 	'Picture It Settings',
+		// 	'Picture It',
+		// 	'manage_options',
+		// 	'picture-it',
+		// 	array($this, 'admin_page_display'),
+		// 	'dashicons-images-alt2',
+		// 	60
+		// );
+
+		// Sub Menu
+		add_options_page(
+			'Picture It Settings',
+			'Picture It',
+			'manage_options',
+			'picture-it',
+			array($this, 'admin_page_display')
+		);
+	 }
+
+	/**
+	 * Admin Page Display 
+	 */
+	public function admin_page_display() {
+
+		include 'partials/picture-it-admin-display.php';
+
+		// old method of saving options display
+		// include 'partials/picture-it-admin-display-form-method.php';
+	}
+
+	// All the hooks for admin_init
+	public function admin_init() {
+
+		// Add Settings Section
+		$this->add_settings_section();
+
+		// Add Settings Fields
+		$this->add_settings_field();
+		// Save Settings
+		$this->save_fields();
+
+	}
+
+	// Add Settings Sections for Plugin Options
+	public function add_settings_section() {
+		add_settings_section(
+			'pi-general-section',
+			'General Settings',
+			function() {
+				echo '<p>These are general settings for Picture It</p>';
+			},
+			'pi-settings-page'
+		);
+
+		add_settings_section(
+			'pi-image-size-section',
+			'Define all image sizes',
+			function() {
+				echo '<p>Here you can add custom image styles to use within your Breakpoint Groups.</p>';
+			},
+			'pi-settings-page'
+		);
+
+		add_settings_section(
+			'pi-breakpoint-group-section',
+			'Define a breakpoint group and its breakpoints.',
+			function() {
+				echo '<p>Here you can define a Breakpoint Group name and add breakpoints.</p>';
+			},
+			'pi-settings-page'
+		);
+	}
+
+	// Add settings fields
+	public function add_settings_field() {
+
+		add_settings_field(
+			'pi_image_size_width',
+			'Image Width',
+			array($this, 'markup_number_fields_cb'),
+			'pi-settings-page',
+			'pi-image-size-section',
+			array(
+					'name' => 'pi_image_size_width',
+					'value' => get_option('pi_image_size_width')
+			)
+		);
+		add_settings_field(
+			'pi_image_size_height',
+			'Image Height (optional)',
+			array($this, 'markup_number_fields_cb'),
+			'pi-settings-page',
+			'pi-image-size-section',
+			array(
+					'name' => 'pi_image_size_height',
+					'value' => get_option('pi_image_size_height')
+			)
+		);
+		add_settings_field(
+			'pi_breakpoint_group_name',
+			'Breakpoint Group Name',
+			array($this, 'markup_text_fields_cb'),
+			'pi-settings-page',
+			'pi-breakpoint-group-section',
+			array(
+					'name' => 'pi_breakpoint_group_name',
+					'value' => get_option('pi_breakpoint_group_name')
+			)
+		);
+
+		add_settings_field(
+			'pi_breakpoint_item',
+			'Breakpoint Minimum Width',
+			array($this, 'markup_number_fields_cb'),
+			'pi-settings-page',
+			'pi-breakpoint-group-section',
+			array(
+					'name' => 'pi_breakpoint_item',
+					'value' => get_option('pi_breakpoint_item')
+			)
+		);
+		add_settings_field(
+			'pi_breakpoint_group_name2',
+			'Breakpoint Group 2 Name',
+			array($this, 'markup_text_fields_cb'),
+			'pi-settings-page',
+			'pi-breakpoint-group-section',
+			array(
+					'name' => 'pi_breakpoint_group_name2',
+					'value' => get_option('pi_breakpoint_group_name2')
+			)
+		);
+		add_settings_field(
+			'pi_breakpoint_item2',
+			'Breakpoint Minimum Width',
+			array($this, 'markup_number_fields_cb'),
+			'pi-settings-page',
+			'pi-breakpoint-group-section',
+			array(
+					'name' => 'pi_breakpoint_item2',
+					'value' => get_option('pi_breakpoint_item2')
+			)
+		);
+		add_settings_field(
+			'pi_breakpoint_group_name3',
+			'Breakpoint Group 3 Name',
+			array($this, 'markup_text_fields_cb'),
+			'pi-settings-page',
+			'pi-breakpoint-group-section',
+			array(
+					'name' => 'pi_breakpoint_group_name3',
+					'value' => get_option('pi_breakpoint_group_name3')
+			)
+		);
+		add_settings_field(
+			'pi_breakpoint_item3',
+			'Breakpoint Minimum Width',
+			array($this, 'markup_number_fields_cb'),
+			'pi-settings-page',
+			'pi-breakpoint-group-section',
+			array(
+					'name' => 'pi_breakpoint_item3',
+					'value' => get_option('pi_breakpoint_item3')
+			)
+		);
+		add_settings_field(
+			'pi_breakpoint_group_name4',
+			'Breakpoint Group 4 Name',
+			array($this, 'markup_text_fields_cb'),
+			'pi-settings-page',
+			'pi-breakpoint-group-section',
+			array(
+					'name' => 'pi_breakpoint_group_name4',
+					'value' => get_option('pi_breakpoint_group_name4')
+			)
+		);
+		add_settings_field(
+			'pi_breakpoint_item4',
+			'Breakpoint Minimum Width',
+			array($this, 'markup_number_fields_cb'),
+			'pi-settings-page',
+			'pi-breakpoint-group-section',
+			array(
+					'name' => 'pi_breakpoint_item4',
+					'value' => get_option('pi_breakpoint_item4')
+			)
+		);
+
+		add_settings_field(
+			'pi_breakpoint_group_select',
+			'Breakpoint Group Select',
+			array($this, 'markup_select_fields_cb'),
+			'pi-settings-page',
+			'pi-image-size-section',
+			array(
+					'name' => 'pi_breakpoint_group_select',
+					'value' => get_option('pi_breakpoint_group_select'),
+					'options' => array(
+						'group_1' => __(get_option('pi_breakpoint_group_name'), 'picture-it'),
+						'group_2' => __(get_option('pi_breakpoint_group_name2'), 'picture-it'),
+						'group_3' => __(get_option('pi_breakpoint_group_name3'), 'picture-it'),
+						'group_4' => __(get_option('pi_breakpoint_group_name4'), 'picture-it')
+					)
+			)
+		);
+	}
+
+	// Save settings fields
+
+	public function save_fields() {
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_image_size_width',
+			array(
+				'sanitize_callback' =>'absint'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_image_size_height',
+			array(
+				'sanitize_callback' =>'absint'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_group_name',
+			array(
+				'sanitize_callback' =>'sanitize_text_field'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_group_name2',
+			array(
+				'sanitize_callback' =>'sanitize_text_field'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_group_name3',
+			array(
+				'sanitize_callback' =>'sanitize_text_field'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_group_name4',
+			array(
+				'sanitize_callback' =>'sanitize_text_field'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_item',
+			array(
+				'sanitize_callback' =>'absint'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_item2',
+			array(
+				'sanitize_callback' =>'absint'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_item3',
+			array(
+				'sanitize_callback' =>'absint'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_item4',
+			array(
+				'sanitize_callback' =>'absint'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_group_select'
+		);
+	}
+
+	// add function for text fields
+	public function markup_text_fields_cb($args) {
+		if (!is_array($args)) {
+			return null;
+		}
+
+		$name = (isset($args['name'])) ? esc_html($args['name']) : ''; 
+		$value = (isset($args['value'])) ? esc_html($args['value']) : ''; 
+
+		?>
+		
+		<input 
+			type="text" 
+			name="<?php echo $name ?>" 
+			value="<?php echo $value ?>" 
+			class="field-<?php echo $name ?>"
+		/>
+
+		<?php
+	}
+
+	// add function for number fields
+	public function markup_number_fields_cb($args) {
+		if (!is_array($args)) {
+			return null;
+		}
+
+		$name = (isset($args['name'])) ? esc_html($args['name']) : ''; 
+		$value = (isset($args['value'])) ? esc_html($args['value']) : ''; 
+
+		?>
+		
+		<input 
+			type="number" 
+			name="<?php echo $name ?>" 
+			value="<?php echo $value ?>" 
+			class="field-<?php echo $name ?>"
+		/>
+
+		<?php
+	}
+		// add function for select fields
+		public function markup_select_fields_cb($args) {
+			if (!is_array($args)) {
+				return null;
+			}
+	
+			$name = (isset($args['name'])) ? esc_html($args['name']) : ''; 
+			$value = (isset($args['value'])) ? esc_html($args['value']) : ''; 
+			$options = (
+				isset($args['options']) && is_array($args['options'])
+				) ? $args['options'] : array()
+			?>
+			
+			<select
+				type="text" 
+				name="<?php echo $name ?>" 
+				class="field-<?php echo $name ?>"
+			>
+			<?php 
+			foreach ($options as $option_key => $option_label) {
+				echo "<option
+					value='{$option_key}'
+					".
+						selected($option_key, $value)
+				."
+					>
+					{$option_label}</option>";
+			}
+			?>
+				</select>
+			<?php
+		}
 }

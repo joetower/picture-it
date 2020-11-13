@@ -13,4 +13,26 @@
  */
 ?>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<div class="wrap picture-it--options">
+  <h1>
+    <?php echo get_admin_page_title();?>
+  </h1>
+  
+  <form method="post" action="options.php">
+   <!-- // display section -->
+    <?php 
+      // security
+      settings_fields('pi-settings-page-options-group');
+
+      // Display Section
+      do_settings_sections('pi-settings-page');
+    ?>
+
+    <div class="defaults image-sizes__wrap">
+
+    </div>
+      <!-- submit & save changes -->
+      <?php submit_button();?> 
+  </form>
+
+</div>
