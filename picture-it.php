@@ -1,88 +1,90 @@
 <?php
-/*
-   Plugin Name: Picture It
-   Plugin URI: https://github.com/joetower/picture-it
-   description: Better responsive images in WordPress - manage breakpoint groups of responsive image sizes and serve responsive images using the Picture element. 
-   Version: 1.0
-   Author: Joe Tower
-   Author URI: https://joetower.com
-   License: GPL2
-   */
 
-// register the settings page
-add_action('admin_menu', 'picture_it_add_admin_menu');
-add_action('admin_init', 'picture_it_settings_init');
+/**
+ * The plugin bootstrap file
+ *
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              https://joetower.com
+ * @since             1.0.0
+ * @package           Picture_It
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Picture It
+ * Plugin URI:        https://joetower.com
+ * Description:       Better responsive images in WordPress - manage breakpoint groups of responsive image sizes and serve responsive images using the Picture element. 
+ * Version:           1.0.0
+ * Author:            Joe Tower
+ * Author URI:        https://joetower.com
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       picture-it
+ * Domain Path:       /languages
+ */
 
-function picture_it_add_admin_menu()
-{
-  add_options_page('Picture It Configuration', 'Picture It Configuration', 'manage_options', 'settings-api-page', 'picture_it_options_page');
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
 
-function picture_it_settings_init()
-{
-  register_setting('stpPlugin', 'picture_it_settings');
-  add_settings_section(
-    'picture_it_stpPlugin_section',
-    __('Enter image size - e.g. 1200, 600', 'wordpress'),
-    'picture_it_settings_section_callback',
-    'stpPlugin'
-  );
+/**
+ * Currently plugin version.
+ * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Rename this for your plugin and update it as you release new versions.
+ */
+define( 'PICTURE_IT_VERSION', '1.0.0' );
+define( 'PICTURE_IT_NAME', 'picture-it' );
 
-  add_settings_field(
-    'picture_it_text_field_0',
-    __('Size in pixels', 'wordpress'),
-    'picture_it_text_field_0_render',
-    'stpPlugin',
-    'picture_it_stpPlugin_section'
-  );
+// Plugin Directly Path
 
-  add_settings_field(
-    'picture_it_select_field_1',
-    __('Our Field 1 Title', 'wordpress'),
-    'picture_it_select_field_1_render',
-    'stpPlugin',
-    'picture_it_stpPlugin_section'
-  );
+define('PICTURE_IT_BASE_DIR', plugin_dir_path(__FILE__));
+
+// Plugin Directly URL
+define('PICTURE_IT_PLUGIN_URL', plugin_dir_url(__FILE__));
+
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-picture-it-activator.php
+ */
+function activate_picture_it() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-picture-it-activator.php';
+	Picture_It_Activator::activate();
 }
 
-function picture_it_text_field_0_render()
-{
-  $options = get_option('picture_it_settings');
-?>
-  <input type='text' name='picture_it_settings[picture_it_text_field_0]' value='<?php echo $options['picture_it_text_field_0']; ?>'>
-<?php
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-picture-it-deactivator.php
+ */
+function deactivate_picture_it() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-picture-it-deactivator.php';
+	Picture_It_Deactivator::deactivate();
 }
 
-function picture_it_select_field_1_render()
-{
-  $options = get_option('picture_it_settings');
-?>
-  <select name='picture_it_settings[picture_it_select_field_1]'>
-    <option value='1' <?php selected($options['picture_it_select_field_1'], 1); ?>>Option 1</option>
-    <option value='2' <?php selected($options['picture_it_select_field_1'], 2); ?>>Option 2</option>
-  </select>
+register_activation_hook( __FILE__, 'activate_picture_it' );
+register_deactivation_hook( __FILE__, 'deactivate_picture_it' );
 
-<?php
+/**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and public-facing site hooks.
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/class-picture-it.php';
+
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    1.0.0
+ */
+function run_picture_it() {
+
+	$plugin = new Picture_It();
+	$plugin->run();
+
 }
-
-function picture_it_settings_section_callback()
-{
-  echo __('Set Image size', 'wordpress');
-}
-
-function picture_it_options_page()
-{
-?>
-  <form action='options.php' method='post'>
-
-    <h2>Picture It Configuration Page</h2>
-
-    <?php
-    settings_fields('stpPlugin');
-    do_settings_sections('stpPlugin');
-    submit_button();
-    ?>
-
-  </form>
-<?php
-}
+run_picture_it();
