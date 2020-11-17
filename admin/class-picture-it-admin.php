@@ -137,6 +137,7 @@ class Picture_It_Admin {
 
 		// Add Settings Fields
 		$this->add_settings_field();
+
 		// Save Settings
 		$this->save_fields();
 
@@ -170,11 +171,31 @@ class Picture_It_Admin {
 			},
 			'pi-settings-page'
 		);
+
+		add_settings_section(
+			'pi-picture-mapping-section',
+			'Select which images to use for each breakpoint.',
+			function() {
+				echo '<p>Map each custom image size (by name) to the appropriate breakpoint in which you would like it applied.</p>';
+			},
+			'pi-settings-page'
+		);
 	}
 
 	// Add settings fields
 	public function add_settings_field() {
 
+		add_settings_field(
+			'pi_image_size_name',
+			'Image Name',
+			array($this, 'markup_text_fields_cb'),
+			'pi-settings-page',
+			'pi-image-size-section',
+			array(
+					'name' => 'pi_image_size_name',
+					'value' => get_option('pi_image_size_name')
+			)
+		);
 		add_settings_field(
 			'pi_image_size_width',
 			'Image Width',
@@ -197,6 +218,41 @@ class Picture_It_Admin {
 					'value' => get_option('pi_image_size_height')
 			)
 		);
+
+		add_settings_field(
+			'pi_image_size_name2',
+			'Image Name',
+			array($this, 'markup_text_fields_cb'),
+			'pi-settings-page',
+			'pi-image-size-section',
+			array(
+					'name' => 'pi_image_size_name2',
+					'value' => get_option('pi_image_size_name2')
+			)
+		);
+		add_settings_field(
+			'pi_image_size_width2',
+			'Image Width',
+			array($this, 'markup_number_fields_cb'),
+			'pi-settings-page',
+			'pi-image-size-section',
+			array(
+					'name' => 'pi_image_size_width2',
+					'value' => get_option('pi_image_size_width2')
+			)
+		);
+		add_settings_field(
+			'pi_image_size_height2',
+			'Image Height (optional)',
+			array($this, 'markup_number_fields_cb'),
+			'pi-settings-page',
+			'pi-image-size-section',
+			array(
+					'name' => 'pi_image_size_height2',
+					'value' => get_option('pi_image_size_height2')
+			)
+		);
+
 		add_settings_field(
 			'pi_breakpoint_group_name',
 			'Breakpoint Group Name',
@@ -210,6 +266,17 @@ class Picture_It_Admin {
 		);
 
 		add_settings_field(
+			'pi_breakpoint_size_name',
+			'Breakpoint Size Name',
+			array($this, 'markup_text_fields_cb'),
+			'pi-settings-page',
+			'pi-breakpoint-group-section',
+			array(
+					'name' => 'pi_breakpoint_size_name',
+					'value' => get_option('pi_breakpoint_size_name')
+			)
+		);
+		add_settings_field(
 			'pi_breakpoint_item',
 			'Breakpoint Minimum Width',
 			array($this, 'markup_number_fields_cb'),
@@ -220,15 +287,16 @@ class Picture_It_Admin {
 					'value' => get_option('pi_breakpoint_item')
 			)
 		);
+
 		add_settings_field(
-			'pi_breakpoint_group_name2',
-			'Breakpoint Group 2 Name',
+			'pi_breakpoint_size_name2',
+			'Breakpoint Size Name',
 			array($this, 'markup_text_fields_cb'),
 			'pi-settings-page',
 			'pi-breakpoint-group-section',
 			array(
-					'name' => 'pi_breakpoint_group_name2',
-					'value' => get_option('pi_breakpoint_group_name2')
+					'name' => 'pi_breakpoint_size_name2',
+					'value' => get_option('pi_breakpoint_size_name2')
 			)
 		);
 		add_settings_field(
@@ -242,15 +310,16 @@ class Picture_It_Admin {
 					'value' => get_option('pi_breakpoint_item2')
 			)
 		);
+
 		add_settings_field(
-			'pi_breakpoint_group_name3',
-			'Breakpoint Group 3 Name',
+			'pi_breakpoint_size_name3',
+			'Breakpoint Size Name',
 			array($this, 'markup_text_fields_cb'),
 			'pi-settings-page',
 			'pi-breakpoint-group-section',
 			array(
-					'name' => 'pi_breakpoint_group_name3',
-					'value' => get_option('pi_breakpoint_group_name3')
+					'name' => 'pi_breakpoint_size_name3',
+					'value' => get_option('pi_breakpoint_size_name3')
 			)
 		);
 		add_settings_field(
@@ -264,15 +333,16 @@ class Picture_It_Admin {
 					'value' => get_option('pi_breakpoint_item3')
 			)
 		);
+
 		add_settings_field(
-			'pi_breakpoint_group_name4',
-			'Breakpoint Group 4 Name',
+			'pi_breakpoint_size_name4',
+			'Breakpoint Size Name',
 			array($this, 'markup_text_fields_cb'),
 			'pi-settings-page',
 			'pi-breakpoint-group-section',
 			array(
-					'name' => 'pi_breakpoint_group_name4',
-					'value' => get_option('pi_breakpoint_group_name4')
+					'name' => 'pi_breakpoint_size_name4',
+					'value' => get_option('pi_breakpoint_size_name4')
 			)
 		);
 		add_settings_field(
@@ -288,20 +358,19 @@ class Picture_It_Admin {
 		);
 
 		add_settings_field(
-			'pi_breakpoint_group_select',
-			'Breakpoint Group Select',
+			'pi_image_size_select',
+			'Select Image Size',
 			array($this, 'markup_select_fields_cb'),
 			'pi-settings-page',
-			'pi-image-size-section',
+			'pi-picture-mapping-section',
 			array(
-					'name' => 'pi_breakpoint_group_select',
-					'value' => get_option('pi_breakpoint_group_select'),
-					'options' => array(
-						'group_1' => __(get_option('pi_breakpoint_group_name'), 'picture-it'),
-						'group_2' => __(get_option('pi_breakpoint_group_name2'), 'picture-it'),
-						'group_3' => __(get_option('pi_breakpoint_group_name3'), 'picture-it'),
-						'group_4' => __(get_option('pi_breakpoint_group_name4'), 'picture-it')
-					)
+				'name' => 'pi_image_size_select',
+				'value' => get_option('pi_image_size_select'),
+				'options' => array(
+					'group_1' => __(get_option('pi_image_size_name'), 'picture-it'),
+					'group_2' => __(get_option('pi_image_size_name2'), 'picture-it')
+
+				)
 			)
 		);
 	}
@@ -309,6 +378,13 @@ class Picture_It_Admin {
 	// Save settings fields
 
 	public function save_fields() {
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_image_size_name',
+			array(
+				'sanitize_callback' =>'sanitize_text_field'
+			)
+		);
 		register_setting(
 			'pi-settings-page-options-group',
 			'pi_image_size_width',
@@ -323,6 +399,29 @@ class Picture_It_Admin {
 				'sanitize_callback' =>'absint'
 			)
 		);
+
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_image_size_name2',
+			array(
+				'sanitize_callback' =>'sanitize_text_field'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_image_size_width2',
+			array(
+				'sanitize_callback' =>'absint'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_image_size_height2',
+			array(
+				'sanitize_callback' =>'absint'
+			)
+		);
+
 		register_setting(
 			'pi-settings-page-options-group',
 			'pi_breakpoint_group_name',
@@ -332,21 +431,28 @@ class Picture_It_Admin {
 		);
 		register_setting(
 			'pi-settings-page-options-group',
-			'pi_breakpoint_group_name2',
+			'pi_breakpoint_size_name',
 			array(
 				'sanitize_callback' =>'sanitize_text_field'
 			)
 		);
 		register_setting(
 			'pi-settings-page-options-group',
-			'pi_breakpoint_group_name3',
+			'pi_breakpoint_size_name2',
 			array(
 				'sanitize_callback' =>'sanitize_text_field'
 			)
 		);
 		register_setting(
 			'pi-settings-page-options-group',
-			'pi_breakpoint_group_name4',
+			'pi_breakpoint_size_name3',
+			array(
+				'sanitize_callback' =>'sanitize_text_field'
+			)
+		);
+		register_setting(
+			'pi-settings-page-options-group',
+			'pi_breakpoint_size_name4',
 			array(
 				'sanitize_callback' =>'sanitize_text_field'
 			)
@@ -381,7 +487,7 @@ class Picture_It_Admin {
 		);
 		register_setting(
 			'pi-settings-page-options-group',
-			'pi_breakpoint_group_select'
+			'pi_image_size_select'
 		);
 	}
 
