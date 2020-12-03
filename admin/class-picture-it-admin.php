@@ -532,36 +532,43 @@ class Picture_It_Admin {
 
 		<?php
 	}
-		// add function for select fields
-		public function markup_select_fields_cb($args) {
-			if (!is_array($args)) {
-				return null;
-			}
-	
-			$name = (isset($args['name'])) ? esc_html($args['name']) : ''; 
-			$value = (isset($args['value'])) ? esc_html($args['value']) : ''; 
-			$options = (
-				isset($args['options']) && is_array($args['options'])
-				) ? $args['options'] : array()
-			?>
-			
-			<select
-				type="text" 
-				name="<?php echo $name ?>" 
-				class="field-<?php echo $name ?>"
-			>
-			<?php 
-			foreach ($options as $option_key => $option_label) {
-				echo "<option
-					value='{$option_key}'
-					".
-						selected($option_key, $value)
-				."
-					>
-					{$option_label}</option>";
-			}
-			?>
-				</select>
-			<?php
+	// add function for select fields
+	public function markup_select_fields_cb($args) {
+		if (!is_array($args)) {
+			return null;
 		}
+
+		$name = (isset($args['name'])) ? esc_html($args['name']) : ''; 
+		$value = (isset($args['value'])) ? esc_html($args['value']) : ''; 
+		$options = (
+			isset($args['options']) && is_array($args['options'])
+			) ? $args['options'] : array()
+		?>
+		
+		<select
+			type="text" 
+			name="<?php echo $name ?>" 
+			class="field-<?php echo $name ?>"
+		>
+		<?php 
+		foreach ($options as $option_key => $option_label) {
+			echo "<option
+				value='{$option_key}'
+				".
+					selected($option_key, $value)
+			."
+				>
+				{$option_label}</option>";
+		}
+		?>
+			</select>
+		<?php
+	}
+
+	// add plugin action links
+	
+	public static function add_plugin_action_links($actions) {
+		$actions[] = '<a href="'. esc_url( get_admin_url(null, 'options-general.php?page=picture-it') ) .'">Settings</a>';
+		return $actions;
+	}
 }
