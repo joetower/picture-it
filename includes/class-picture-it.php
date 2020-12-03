@@ -150,26 +150,26 @@ class Picture_It {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		// // Adding Plugin Admin Menu
-		// $this->loader->add_action( 
-		// 	'admin_menu',
-		// 	$plugin_admin,
-		// 	'add_admin_menu' 
-		// );
+		// Adding Plugin Admin Menu
+		$this->loader->add_action( 
+			'admin_menu',
+			$plugin_admin,
+			'add_admin_menu' 
+		);
 
-		// // Hooks for admin_init
-		// $this->loader->add_action( 
-		// 	'admin_init',
-		// 	$plugin_admin,
-		// 	'admin_init' 
-		// );
+		// Hooks for admin_init
+		$this->loader->add_action( 
+			'admin_init',
+			$plugin_admin,
+			'admin_init' 
+		);
 
-		// // Hooks for plugin action links
-		// $this->loader->add_action( 
-		// 	'plugin_action_links_' . plugin_basename( PICTURE_IT_BASE_FILE ),
-		// 	$plugin_admin,
-		// 	'add_plugin_action_links' 
-		// );
+		// Hooks for plugin action links
+		$this->loader->add_action( 
+			'plugin_action_links_' . plugin_basename( PICTURE_IT_BASE_FILE ),
+			$plugin_admin,
+			'add_plugin_action_links' 
+		);
 		
 	}
 
