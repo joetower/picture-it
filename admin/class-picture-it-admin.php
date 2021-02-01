@@ -73,10 +73,12 @@ class Picture_It_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
-
-		wp_enqueue_script( $this->picture_it, plugin_dir_url( __FILE__ ) . 'js/picture-it-admin.js', [ 'jquery' ], $this->version, FALSE );
-
+	public function enqueue_scripts($hook) {
+	    if ($hook !== 'settings_page_picture-it') {
+	        return;
+        }
+		wp_register_script( 'picture-it-admin', plugin_dir_url( __FILE__ ) . 'js/picture-it-admin.js', [ 'jquery' ], $this->version, FALSE );
+		wp_enqueue_script( 'picture-it-admin' );
 	}
 
 	/**
@@ -314,48 +316,8 @@ class Picture_It_Admin {
 	public function save_fields() {
 		register_setting(
 			'pi-settings-page-options-group',
-			'pi_image_size_name',
-			[
-				'sanitize_callback' => 'sanitize_text_field',
-			]
+			'pi_image_sizes'
 		);
-		register_setting(
-			'pi-settings-page-options-group',
-			'pi_image_size_width',
-			[
-				'sanitize_callback' => 'absint',
-			]
-		);
-		register_setting(
-			'pi-settings-page-options-group',
-			'pi_image_size_height',
-			[
-				'sanitize_callback' => 'absint',
-			]
-		);
-
-		register_setting(
-			'pi-settings-page-options-group',
-			'pi_image_size_name2',
-			[
-				'sanitize_callback' => 'sanitize_text_field',
-			]
-		);
-		register_setting(
-			'pi-settings-page-options-group',
-			'pi_image_size_width2',
-			[
-				'sanitize_callback' => 'absint',
-			]
-		);
-		register_setting(
-			'pi-settings-page-options-group',
-			'pi_image_size_height2',
-			[
-				'sanitize_callback' => 'absint',
-			]
-		);
-
 		register_setting(
 			'pi-settings-page-options-group',
 			'pi_breakpoint_group_name',
@@ -427,7 +389,6 @@ class Picture_It_Admin {
 
 	// Build repeating image size fields.
 	public function markup_image_sizes( $args ) {
-		wp_enqueue_script( $this->picture_it, plugin_dir_url( __FILE__ ) . 'js/picture-it-admin.js', [ 'jquery' ], $this->version, FALSE );
 		if ( empty( $args['value'] ) ) {
 			$args['value'] = [
 				[
@@ -440,19 +401,19 @@ class Picture_It_Admin {
 
 		foreach ( $args['value'] as $key => $size ) {
 		    ?>
-                <table><tr>
+                <table class="pi-image-sizes"><tr class="pi-image-size" data-row-id="<?php echo $key;?>">
             <?php
 			$fields = [
 				'name'   => [
-					'name'  => 'pi_image_sizes[' . $key . '][name]',
+					'name'  => $args['name'] . '[' . $key . '][name]',
 					'value' => $size['name'],
 				],
 				'width'  => [
-					'name'  => 'pi_image_sizes[' . $key . '][width]',
+					'name'  => $args['name'] . '[' . $key . '][width]',
 					'value' => $size['width'],
 				],
 				'height' => [
-					'name'  => 'pi_image_sizes[' . $key . '][height]',
+					'name'  => $args['name'] . '[' . $key . '][height]',
 					'value' => $size['height'],
 				],
 			];
