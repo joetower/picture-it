@@ -4,7 +4,7 @@
 
 WordPress plugin to manage breakpoint groups of responsive image sizes and serve responsive images using the Picture element.
 
-In-progress design prototype: https://www.figma.com/proto/1uzHcosxEgr7uxn5Q4GqfY/Picture-It-Workflow?node-id=8%3A2&scaling=min-zoom
+In-progress design prototype: https://www.figma.com/proto/1uzHcosxEgr7uxn5Q4GqfY/Picture-It-Workflow?node-id=211%3A2&scaling=min-zoom
 
 
 ## Goals
