@@ -14,3 +14,26 @@
  .breakpoint-group__wrap {
    border-top: 0.5rem solid #333333;
  }
+
+ .pi-existing-sizes {
+     display: flex;
+     justify-content: space-around;
+ }
+
+ .pi-image-size {
+     border: 1px solid;
+     padding-top: 10px;
+ }
+
+ .pi-image-size strong{
+     display: block;
+     padding: 5px 20px;
+ }
+
+ .pi-image-size a {
+     background-color: #808992;
+     color: white;
+     display: block;
+     text-align: center;
+     width: 100%;
+ }
