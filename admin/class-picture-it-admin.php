@@ -123,6 +123,9 @@ class Picture_It_Admin {
 	// All the hooks for admin_init
 	public function admin_init() {
 
+	    // Adding image sizes;
+	    $this->register_sizes();
+
 		// Add Settings Section
 		$this->add_settings_section();
 
@@ -132,6 +135,20 @@ class Picture_It_Admin {
 		// Save Settings
 		$this->save_fields();
 
+	}
+
+	public function register_sizes() {
+	    add_theme_support('post_thumbnails');
+		$sizes = get_option( 'pi_image_sizes', [] );
+		if ( $sizes !== [] ) {
+			foreach ( $sizes as $size ) {
+				add_image_size(
+					sanitize_title( $size['name'] ),
+					$size['width'],
+					$size['height']
+                );
+			}
+		}
 	}
 
 	// Add Settings Sections for Plugin Options
@@ -404,10 +421,15 @@ class Picture_It_Admin {
 	}
 
 	// Merging our options rather than just overriding.
-	public function sanitize_image_size($args) {
-	    $option = get_option('pi_image_sizes');
-	    return array_replace($option, $args);
-    }
+	public function sanitize_image_size( $args ) {
+		$option = get_option( 'pi_image_sizes', [] );
+		if ( $option == [] ) {
+			return $args;
+		}
+
+		// If we have existing values let's merge them and replace by name.
+		return array_replace( $option, $args );
+	}
 
 	// Build repeating image size fields.
 	public function markup_image_sizes( $args ) {
@@ -496,8 +518,8 @@ class Picture_It_Admin {
 					?>
                     <div class="pi-image-size">
                         <strong><?php echo $value['name']; ?></strong>
-                        <strong><?php echo (!empty($value['width']) ? $value['width'] . 'px' : ''); ?></strong>
-                        <strong><?php echo (!empty($value['height']) ? $value['height'] . 'px' : ''); ?></strong>
+                        <strong><?php echo( ! empty( $value['width'] ) ? $value['width'] . 'px' : '' ); ?></strong>
+                        <strong><?php echo( ! empty( $value['height'] ) ? $value['height'] . 'px' : '' ); ?></strong>
                         <div class="pi-image-size-edit">
                             <a href="<?php echo $url . '&size=' . $key ?>" class="size-edit">Edit</a>
                         </div>
@@ -591,5 +613,40 @@ class Picture_It_Admin {
 		$actions[] = '<a href="' . esc_url( get_admin_url( null, 'options-general.php?page=picture-it' ) ) . '">Settings</a>';
 
 		return $actions;
+	}
+
+	// Adds our custom sizes to the admin for use.
+	public function add_image_sizes( $sizes ) {
+		$pi_sizes = get_option( 'pi_image_sizes', [] );
+		if ( $pi_sizes != [] ) {
+			foreach ( $pi_sizes as $size ) {
+				$sizes[sanitize_title($size['name'])] = $size['name'];
+			}
+		}
+		return $sizes;
+	}
+
+
+	/**
+	 * @param $the_content
+     * @see: https://jhtechservices.com/changing-your-image-markup-in-wordpress/
+	 */
+	public function image_markup_alter( $the_content ) {
+		libxml_use_internal_errors(true);
+	    $post = new DOMDocument();
+	    $post->loadHTML($the_content);
+	    $img_tags = $post->getElementsByTagName('img');
+
+	    foreach( $img_tags as $img) {
+	        $pict = $post->createElement('picture');
+	        $pict->setAttribute('class','pi-image');
+	        $source = $post->createElement('source');
+	        $source->setAttribute('srcset', $img->getAttribute('srcset'));
+	        $pict->appendChild($source);
+	        $img->parentNode->appendChild($pict);
+	        $pict->appendChild($img);
+	    }
+
+	    return $post->saveHTML();
 	}
 }

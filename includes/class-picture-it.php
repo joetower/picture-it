@@ -170,7 +170,11 @@ class Picture_It {
 			$plugin_admin,
 			'add_plugin_action_links' 
 		);
-		
+
+		$this->loader->add_filter('image_size_names_choose', $plugin_admin, 'add_image_sizes');
+		$this->loader->add_action('after_setup_theme', $plugin_admin, 'register_sizes');
+		$this->loader->add_filter('intermediate_image_sizes', $plugin_admin, 'add_image_sizes',20);
+		$this->loader->add_filter('the_content', $plugin_admin,'image_markup_alter', 99);
 	}
 
 	/**
