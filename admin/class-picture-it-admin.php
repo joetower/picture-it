@@ -158,7 +158,7 @@ class Picture_It_Admin {
 			'pi-image-size-section',
 			'Image Sizes',
 			function () {
-				echo '<p>Here you can define image sizes to use in your breakpoint image maps.</p>';
+				echo '<p>Define image sizes to use in your breakpoint image maps.</p>';
 			},
 			'pi-settings-page'
 		);
@@ -167,7 +167,7 @@ class Picture_It_Admin {
 			'pi-breakpoint-group-section',
 			'Breakpoint Groups',
 			function () {
-				echo '<p>Here you can define a Breakpoint Group name and add breakpoints.</p>';
+				echo '<p>Define a Breakpoint Group name and add breakpoints.</p>';
 			},
 			'pi-settings-page-bp-group'
 		);
