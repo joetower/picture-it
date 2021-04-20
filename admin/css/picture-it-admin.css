@@ -3,6 +3,11 @@
  * included in this file.
  */
 
+ .picture-it--options .form-table th {
+   width: auto;
+   padding: 0;
+ }
+
 .pi-existing-sizes {
   display: flex;
   align-items: stretch;
