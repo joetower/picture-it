@@ -42,12 +42,13 @@ if ( isset( $_POST ) && ! empty ( $_POST ) ) {
   <h1>Picture It Media Settings</h1>
 
   <form method="post" action="">
-   
+
     <div class="defaults image-sizes__wrap">
 
       <div class="info-box">
         <h2 class="title">Image sizes</h2>
-        <p>The sizes listed below determine the maximum dimensions in pixels to use when adding an image to the Media Library.</p>
+        <p>The sizes listed below determine the maximum dimensions in pixels to use when adding an image to the Media
+          Library.</p>
       </div>
 
       <div class="size-box size-box__image-size">
@@ -63,37 +64,24 @@ if ( isset( $_POST ) && ! empty ( $_POST ) ) {
           <label for="pi-image-size-width">
             Width
           </label>
-          <input 
-            name="pi-image-size-width"
-            type="number"
-            step="1"
-            min="0"
-            id="pi-image-size-width" 
-            value="<?php echo get_option('pi_image_size_width') ?>" 
-            class="small-text"
-          >
-            <br>
+          <input name="pi-image-size-width" type="number" step="1" min="0" id="pi-image-size-width"
+            value="<?php echo get_option('pi_image_size_width') ?>" class="small-text">
+          <br>
           <label for="pi-image-size-height">
             Height
           </label>
-          <input 
-            name="pi-image-size-height" 
-            type="number"
-            step="1"
-            min="0"
-            id="pi-image-size-height" 
-            value="<?php echo get_option('pi_image_size_height') ?>" 
-            class="small-text"
-          >
+          <input name="pi-image-size-height" type="number" step="1" min="0" id="pi-image-size-height"
+            value="<?php echo get_option('pi_image_size_height') ?>" class="small-text">
           <input name="thumbnail_crop" type="checkbox" id="thumbnail_crop" value="1">
           <label for="thumbnail_crop">Crop thumbnail to exact dimensions (normally thumbnails are proportional)</label>
         </fieldset>
       </div>
-      
+
       <!-- add another image size -->
       <div class="size-box size-box__more">
-        <p class="submit add-another">      
-          <input type="submit" name="submit" id="pi-add-another-size" class="button button-secondary" value="Add Another Size">
+        <p class="submit add-another">
+          <input type="submit" name="submit" id="pi-add-another-size" class="button button-secondary"
+            value="Add Another Size">
         </p>
       </div>
     </div>
@@ -104,7 +92,8 @@ if ( isset( $_POST ) && ! empty ( $_POST ) ) {
         <p>Add a new breakpoint group and include image sizes defined above.</p>
 
         <p><strong>Defining breakpoints</strong></p>
-        <p>In the text box below allows you to specify whether you would like your breakpoint query to use max-width(300px) or max-width(300px);
+        <p>In the text box below allows you to specify whether you would like your breakpoint query to use
+          max-width(300px) or max-width(300px);
       </div>
 
       <h3>Default Breakpoint Group</h3>
@@ -153,7 +142,8 @@ if ( isset( $_POST ) && ! empty ( $_POST ) ) {
       <!-- add another breakpoint to the group -->
       <div class="more">
         <p class="submit add-another">
-          <input type="submit" name="submit" id="pi-add-another-bp" class="button button-secondary" value="Add Another Breakpoint">
+          <input type="submit" name="submit" id="pi-add-another-bp" class="button button-secondary"
+            value="Add Another Breakpoint">
         </p>
       </div>
 
@@ -162,12 +152,13 @@ if ( isset( $_POST ) && ! empty ( $_POST ) ) {
       <!-- add another breakpoint group -->
       <div class="more">
         <p class="submit add-another">
-          <input type="submit" name="submit" id="pi-add-another-bpg" class="button button-secondary" value="Add Another Breakpoint Group">
+          <input type="submit" name="submit" id="pi-add-another-bpg" class="button button-secondary"
+            value="Add Another Breakpoint Group">
         </p>
       </div>
 
       <!-- submit & save changes -->
-      <?php submit_button();?> 
+      <?php submit_button();?>
   </form>
 
 </div>
