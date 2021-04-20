@@ -518,7 +518,8 @@ class Picture_It_Admin {
     <?php endif; ?>
     <div class="pi-image-size-edit">
       <a href="<?php echo $url . '&size=' . $key ?>" class="size-edit">
-        <span class="dashicons dashicons-edit">Edit</span>
+        <span class="dashicons dashicons-edit"></span>
+        <span class="pi-image-size-edit-label">Edit</span>
       </a>
     </div>
   </div>

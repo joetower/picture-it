@@ -5,7 +5,7 @@
 
 .pi-existing-sizes {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   flex-flow: row wrap;
 }
@@ -21,6 +21,7 @@
 }
 
 .pi-image-size span {
+  flex: 1 auto;
   display: block;
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
@@ -51,6 +52,10 @@
 .pi-image-size .pi-image-size-edit {
   width: 100%;
   margin-top: 1rem;
+}
+
+.pi-image-size-edit-label {
+  font-weight: bold;
 }
 
 .pi-image-size .dashicons-edit::before {
