@@ -40,11 +40,11 @@
     <form method="post" action="options.php">
       <?php switch($tab) :
         case 'breakpointgroup':
-          settings_fields('pi-breakpoint-group-section');
+          settings_fields('pi-settings-page-bp-group');
           do_settings_sections('pi-settings-page-bp-group');
           break;
         case 'breakpointmap':
-          settings_fields('pi-picture-mapping-section');
+          settings_fields('pi-settings-page-bp-map');
           do_settings_sections('pi-settings-page-bp-map');
           break;
         default:
