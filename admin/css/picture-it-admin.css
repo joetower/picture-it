@@ -3,41 +3,102 @@
  * included in this file.
  */
 
- .info-box {
-   padding: 2rem;
- }
+.pi-existing-sizes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
 
- .defaults {
-   padding: 2rem;
- }
+.pi-image-size {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 1px solid #656b72;
+  flex: 0 200px;
+  margin: 1rem 0;
+  justify-content: center;
+  align-items: center;
+}
 
- .breakpoint-group__wrap {
-   border-top: 0.5rem solid #333333;
- }
+.pi-image-size span {
+  display: block;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
 
- .pi-existing-sizes {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     box-sizing: border-box;
-     flex-flow: row wrap;
- }
+.pi-image-size .image-size-name {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}
 
- .pi-image-size {
-     border: 1px solid;
-     flex: 0 200px;
-     margin: 1rem 0;
- }
+/* edit form */
+.pi-image-sizes-form .pi-image-size td {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 100%;
+}
 
- .pi-image-size strong {
-     display: block;
-     padding: 0.5rem 1rem;
- }
+.pi-image-sizes-form .pi-image-size label {
+  margin-right: 1rem;
+}
+.pi-image-sizes-form .pi-image-size input {
+  flex: 1 auto;
+}
 
- .pi-image-size a {
-     background-color: #808992;
-     color: white;
-     display: block;
-     text-align: center;
-     padding: 0.5rem 1rem;
- }
+/* edit button */
+.pi-image-size .pi-image-size-edit {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.pi-image-size .dashicons-edit::before {
+  margin-right: 0.5rem;
+}
+
+.pi-image-size a {
+  background-color: #656b72;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+.pi-image-size a span {
+  flex: 1 auto;
+  padding: 0;
+}
+
+.pi-image-size a:hover,
+.pi-image-size a:focus {
+  text-decoration: none;
+  background-color: #2271b1;
+  border-color: #2271b1;
+}
+
+/* tabs */
+.nav-tab {
+  font-size: 1rem;
+}
+
+.nav-tab-active, 
+.nav-tab-active:focus, 
+.nav-tab-active:focus:active, 
+.nav-tab-active:hover {
+  background-color: white;
+}
+
+.tab-content {
+  background-color: white;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.tab-content * {
+  box-sizing: border-box;
+}

@@ -502,7 +502,7 @@ class Picture_It_Admin {
 	// Display existing image sizes
 	public function markup_existing_sizes( $args ) {
 		if ( ! empty( $args['value'] ) ) {
-			echo '<strong>Manage Existing Image Sizes</strong>';
+			echo '<h3>Manage Existing Image Sizes</h3>';
 			?>
 <div class="pi-existing-sizes">
   <?php
@@ -510,11 +510,16 @@ class Picture_It_Admin {
 				foreach ( $args['value'] as $key => $value ) {
 					?>
   <div class="pi-image-size">
-    <strong><?php echo $value['name']; ?></strong>
-    <strong><?php echo( ! empty( $value['width'] ) ? $value['width'] . 'px' : '' ); ?></strong>
-    <strong><?php echo( ! empty( $value['height'] ) ? $value['height'] . 'px' : '' ); ?></strong>
+    <span class="image-size-name"><?php echo $value['name']; ?></span>
+    <span class="image-size-width"><?php echo( ! empty( $value['width'] ) ? $value['width'] . 'px' : '' ); ?></span>
+    <?php if( ! empty( $value['height'] )):?>
+    <span class="image-size-height">
+      <?php echo( ! empty( $value['height'] ) ? $value['height'] . 'px' : '' ); ?></span>
+    <?php endif; ?>
     <div class="pi-image-size-edit">
-      <a href="<?php echo $url . '&size=' . $key ?>" class="size-edit">Edit</a>
+      <a href="<?php echo $url . '&size=' . $key ?>" class="size-edit">
+        <span class="dashicons dashicons-edit">Edit</span>
+      </a>
     </div>
   </div>
   <?php
