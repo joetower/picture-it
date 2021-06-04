@@ -80,7 +80,7 @@
 }
 
 .pi-image-size a span {
-  flex: 1 auto;
+  flex: 0 auto;
   padding: 0;
 }
 
