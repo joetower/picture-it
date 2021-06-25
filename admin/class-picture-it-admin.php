@@ -209,6 +209,18 @@ class Picture_It_Admin {
 			]
 		);
 
+		add_settings_field(
+		    'pi_breakpoint_groups',
+            'Breakpoint Groups',
+            [ $this, 'markup_breakpoint_groups' ],
+            'pi-settings-page-bp-group',
+			'pi-breakpoint-group-section',
+            [
+                'name' => 'pi_breakpoint_groups',
+                'value' => get_option( 'pi_breakpoint_groups' ),
+            ]
+        );
+
 
 		add_settings_field(
 			'pi_breakpoint_group_name',
@@ -344,68 +356,13 @@ class Picture_It_Admin {
 			]
 		);
 		register_setting(
-			'pi-settings-page-bp-group',
-			'pi_breakpoint_group_name',
-			[
-				'sanitize_callback' => 'sanitize_text_field',
-			]
-		);
-		register_setting(
-			'pi-settings-page-bp-group',
-			'pi_breakpoint_size_name',
-			[
-				'sanitize_callback' => 'sanitize_text_field',
-			]
-		);
-		register_setting(
-			'pi-settings-page-bp-group',
-			'pi_breakpoint_size_name2',
-			[
-				'sanitize_callback' => 'sanitize_text_field',
-			]
-		);
-		register_setting(
-			'pi-settings-page-bp-group',
-			'pi_breakpoint_size_name3',
-			[
-				'sanitize_callback' => 'sanitize_text_field',
-			]
-		);
-		register_setting(
-			'pi-settings-page-bp-group',
-			'pi_breakpoint_size_name4',
-			[
-				'sanitize_callback' => 'sanitize_text_field',
-			]
-		);
-		register_setting(
-			'pi-settings-page-bp-group',
-			'pi_breakpoint_item',
-			[
-				'sanitize_callback' => 'absint',
-			]
-		);
-		register_setting(
-			'pi-settings-page-bp-group',
-			'pi_breakpoint_item2',
-			[
-				'sanitize_callback' => 'absint',
-			]
-		);
-		register_setting(
-			'pi-settings-page-bp-group',
-			'pi_breakpoint_item3',
-			[
-				'sanitize_callback' => 'absint',
-			]
-		);
-		register_setting(
-			'pi-settings-page-bp-group',
-			'pi_breakpoint_item4',
-			[
-				'sanitize_callback' => 'absint',
-			]
-		);
+		    'pi-settings-page-bp-group',
+            'pi_breakpoint_groups',
+            [
+                'type' => 'array',
+                'sanitize_callback' => [ $this, 'sanitize_breakpoint_groups'],
+            ]
+        );
 		register_setting(
 			'pi-settings-page-bp-map',
 			'pi_image_size_select'
@@ -422,6 +379,17 @@ class Picture_It_Admin {
 		// If we have existing values let's merge them and replace by name.
 		return array_replace( $option, $args );
 	}
+
+	// This will need to expand in the future so we'll duplicate it for now.
+	public function sanitize_breakpoint_groups( $args ) {
+		$option = get_option( 'pi_breakpoint_groups', [] );
+		if ( $option == [] ) {
+			return $args;
+		}
+
+		// If we have existing values let's merge them and replace by name.
+		return array_replace( $option, $args );
+    }
 
 	// Build repeating image size fields.
 	public function markup_image_sizes( $args ) {
@@ -598,6 +566,28 @@ class Picture_It_Admin {
 		$actions[] = '<a href="' . esc_url( get_admin_url( null, 'options-general.php?page=picture-it' ) ) . '">Settings</a>';
 
 		return $actions;
+	}
+
+	public function markup_breakpoint_groups( $args ) {
+	    $option = $args['value'];
+	    $default = [
+	      [
+	          'name' => '',
+              'sizes' => [
+                  [
+	                  'name' => '',
+	                  'width' => 0,
+                  ]
+              ]
+          ]
+        ];
+	    $values = $option;
+	    if ($option == []) {
+	        $values = $default;
+	    }
+	    foreach ($values as $key => $data) {
+	        include 'partials/picture-it-breakpoint-group-form-partial.php';
+	    }
 	}
 
 	// Adds our custom sizes to the admin for use.
