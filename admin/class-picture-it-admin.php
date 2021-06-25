@@ -153,20 +153,12 @@ class Picture_It_Admin {
 
 	// Add Settings Sections for Plugin Options
 	public function add_settings_section() {
-		add_settings_section(
-			'pi-general-section',
-			'General Settings',
-			function () {
-				echo '<p>These are general settings for Picture It</p>';
-			},
-			'pi-settings-page'
-		);
 
 		add_settings_section(
 			'pi-image-size-section',
 			'Image Sizes',
 			function () {
-				echo '';
+				echo '<p>Define image sizes to use in your breakpoint image maps.</p>';
 			},
 			'pi-settings-page'
 		);
@@ -175,9 +167,9 @@ class Picture_It_Admin {
 			'pi-breakpoint-group-section',
 			'Breakpoint Groups',
 			function () {
-				echo '<p>Here you can define a Breakpoint Group name and add breakpoints.</p>';
+				echo '<p>Define a Breakpoint Group name and add breakpoints.</p>';
 			},
-			'pi-settings-page'
+			'pi-settings-page-bp-group'
 		);
 
 		add_settings_section(
@@ -186,7 +178,7 @@ class Picture_It_Admin {
 			function () {
 				echo '<p>Map each custom image size (by name) to the appropriate breakpoint in which you would like it applied.</p>';
 			},
-			'pi-settings-page'
+			'pi-settings-page-bp-map'
 		);
 	}
 
@@ -222,7 +214,7 @@ class Picture_It_Admin {
 			'pi_breakpoint_group_name',
 			'Breakpoint Group Name',
 			[ $this, 'markup_text_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-group',
 			'pi-breakpoint-group-section',
 			[
 				'name'  => 'pi_breakpoint_group_name',
@@ -234,7 +226,7 @@ class Picture_It_Admin {
 			'pi_breakpoint_size_name',
 			'Breakpoint Size Name',
 			[ $this, 'markup_text_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-group',
 			'pi-breakpoint-group-section',
 			[
 				'name'  => 'pi_breakpoint_size_name',
@@ -245,7 +237,7 @@ class Picture_It_Admin {
 			'pi_breakpoint_item',
 			'Breakpoint Minimum Width',
 			[ $this, 'markup_number_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-group',
 			'pi-breakpoint-group-section',
 			[
 				'name'  => 'pi_breakpoint_item',
@@ -257,7 +249,7 @@ class Picture_It_Admin {
 			'pi_breakpoint_size_name2',
 			'Breakpoint Size Name',
 			[ $this, 'markup_text_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-group',
 			'pi-breakpoint-group-section',
 			[
 				'name'  => 'pi_breakpoint_size_name2',
@@ -268,7 +260,7 @@ class Picture_It_Admin {
 			'pi_breakpoint_item2',
 			'Breakpoint Minimum Width',
 			[ $this, 'markup_number_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-group',
 			'pi-breakpoint-group-section',
 			[
 				'name'  => 'pi_breakpoint_item2',
@@ -280,7 +272,7 @@ class Picture_It_Admin {
 			'pi_breakpoint_size_name3',
 			'Breakpoint Size Name',
 			[ $this, 'markup_text_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-group',
 			'pi-breakpoint-group-section',
 			[
 				'name'  => 'pi_breakpoint_size_name3',
@@ -291,7 +283,7 @@ class Picture_It_Admin {
 			'pi_breakpoint_item3',
 			'Breakpoint Minimum Width',
 			[ $this, 'markup_number_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-group',
 			'pi-breakpoint-group-section',
 			[
 				'name'  => 'pi_breakpoint_item3',
@@ -303,7 +295,7 @@ class Picture_It_Admin {
 			'pi_breakpoint_size_name4',
 			'Breakpoint Size Name',
 			[ $this, 'markup_text_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-group',
 			'pi-breakpoint-group-section',
 			[
 				'name'  => 'pi_breakpoint_size_name4',
@@ -314,7 +306,7 @@ class Picture_It_Admin {
 			'pi_breakpoint_item4',
 			'Breakpoint Minimum Width',
 			[ $this, 'markup_number_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-group',
 			'pi-breakpoint-group-section',
 			[
 				'name'  => 'pi_breakpoint_item4',
@@ -326,7 +318,7 @@ class Picture_It_Admin {
 			'pi_image_size_select',
 			'Select Image Size',
 			[ $this, 'markup_select_fields_cb' ],
-			'pi-settings-page',
+			'pi-settings-page-bp-map',
 			'pi-picture-mapping-section',
 			[
 				'name'    => 'pi_image_size_select',
@@ -352,70 +344,70 @@ class Picture_It_Admin {
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-group',
 			'pi_breakpoint_group_name',
 			[
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-group',
 			'pi_breakpoint_size_name',
 			[
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-group',
 			'pi_breakpoint_size_name2',
 			[
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-group',
 			'pi_breakpoint_size_name3',
 			[
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-group',
 			'pi_breakpoint_size_name4',
 			[
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-group',
 			'pi_breakpoint_item',
 			[
 				'sanitize_callback' => 'absint',
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-group',
 			'pi_breakpoint_item2',
 			[
 				'sanitize_callback' => 'absint',
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-group',
 			'pi_breakpoint_item3',
 			[
 				'sanitize_callback' => 'absint',
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-group',
 			'pi_breakpoint_item4',
 			[
 				'sanitize_callback' => 'absint',
 			]
 		);
 		register_setting(
-			'pi-settings-page-options-group',
+			'pi-settings-page-bp-map',
 			'pi_image_size_select'
 		);
 	}
@@ -473,62 +465,69 @@ class Picture_It_Admin {
 			],
 		];
 		?>
-		<?php if ( $hide_form ) { ?>
-            <button class="pi-reveal-form">Add Image Size</button>
-		<?php } ?>
-        <div class="pi-image-sizes <?php echo $hide_form ? 'hidden' : ''; ?>">
-            <table class="pi-image-sizes-form">
-                <tr class="pi-image-size">
-                    <td>
-                        <label for="pi_image_sizes[<?php echo $next_key; ?>][name]"><strong>Name</strong></label>
-						<?php
+<?php if ( $hide_form ) { ?>
+<button class="pi-reveal-form">Add Image Size</button>
+<?php } ?>
+<div class="pi-image-sizes <?php echo $hide_form ? 'hidden' : ''; ?>">
+  <table class="pi-image-sizes-form">
+    <tr class="pi-image-size">
+      <td>
+        <label for="pi_image_sizes[<?php echo $next_key; ?>][name]"><strong>Name</strong></label>
+        <?php
 						$this->markup_text_fields_cb( $fields['name'] );
 						?>
-                    </td>
-                    <td>
-                        <label for="pi_image_sizes[<?php echo $next_key; ?>][width]"><strong>Width</strong></label>
-						<?php
+      </td>
+      <td>
+        <label for="pi_image_sizes[<?php echo $next_key; ?>][width]"><strong>Width</strong></label>
+        <?php
 						$this->markup_number_fields_cb( $fields['width'] );
 						?>
-                    </td>
-                    <td>
-                        <label for="pi_image_sizes[<?php echo $next_key; ?>][height]"><strong>Height
-                                (Optional)</strong></label>
-						<?php
+      </td>
+      <td>
+        <label for="pi_image_sizes[<?php echo $next_key; ?>][height]"><strong>Height
+            (Optional)</strong></label>
+        <?php
 						$this->markup_number_fields_cb( $fields['height'] );
-						?></td>
-                </tr>
-            </table>
-			<?php if ( $hide_form ) { ?>
-                <button class="add-more add-more-image-sizes">Add another</button>
-			<?php } ?>
-        </div>
-		<?php
+						?>
+      </td>
+    </tr>
+  </table>
+  <?php if ( $hide_form ) { ?>
+  <button class="add-more add-more-image-sizes">Add another</button>
+  <?php } ?>
+</div>
+<?php
 	}
 
 	// Display existing image sizes
 	public function markup_existing_sizes( $args ) {
 		if ( ! empty( $args['value'] ) ) {
-			echo '<strong>Manage Existing Image Sizes</strong>';
+			echo '<h3>Manage Existing Image Sizes</h3>';
 			?>
-            <div class="pi-existing-sizes">
-				<?php
+<div class="pi-existing-sizes">
+  <?php
 				$url = admin_url( 'options-general.php?page=picture-it' );
 				foreach ( $args['value'] as $key => $value ) {
 					?>
-                    <div class="pi-image-size">
-                        <strong><?php echo $value['name']; ?></strong>
-                        <strong><?php echo( ! empty( $value['width'] ) ? $value['width'] . 'px' : '' ); ?></strong>
-                        <strong><?php echo( ! empty( $value['height'] ) ? $value['height'] . 'px' : '' ); ?></strong>
-                        <div class="pi-image-size-edit">
-                            <a href="<?php echo $url . '&size=' . $key ?>" class="size-edit">Edit</a>
-                        </div>
-                    </div>
-					<?php
+  <div class="pi-image-size">
+    <span class="image-size-name"><?php echo $value['name']; ?></span>
+    <span class="image-size-width"><?php echo( ! empty( $value['width'] ) ? $value['width'] . 'px' : '' ); ?></span>
+    <?php if( ! empty( $value['height'] )):?>
+    <span class="image-size-height">
+      <?php echo( ! empty( $value['height'] ) ? $value['height'] . 'px' : '' ); ?></span>
+    <?php endif; ?>
+    <div class="pi-image-size-edit">
+      <a href="<?php echo $url . '&size=' . $key ?>" class="size-edit">
+        <span class="dashicons dashicons-edit"></span>
+        <span class="pi-image-size-edit-label">Edit</span>
+      </a>
+    </div>
+  </div>
+  <?php
 				}
 				?>
-            </div>
-			<?php
+</div>
+<?php
 		}
 	}
 
@@ -543,14 +542,9 @@ class Picture_It_Admin {
 
 		?>
 
-        <input
-                type="text"
-                name="<?php echo $name ?>"
-                value="<?php echo $value ?>"
-                class="field-<?php echo $name ?>"
-        />
+<input type="text" name="<?php echo $name ?>" value="<?php echo $value ?>" class="field-<?php echo $name ?>" />
 
-		<?php
+<?php
 	}
 
 	// add function for number fields
@@ -564,14 +558,9 @@ class Picture_It_Admin {
 
 		?>
 
-        <input
-                type="number"
-                name="<?php echo $name ?>"
-                value="<?php echo $value ?>"
-                class="field-<?php echo $name ?>"
-        />
+<input type="number" name="<?php echo $name ?>" value="<?php echo $value ?>" class="field-<?php echo $name ?>" />
 
-		<?php
+<?php
 	}
 
 	// add function for select fields
@@ -587,12 +576,8 @@ class Picture_It_Admin {
 		) ? $args['options'] : []
 		?>
 
-        <select
-                type="text"
-                name="<?php echo $name ?>"
-                class="field-<?php echo $name ?>"
-        >
-			<?php
+<select type="text" name="<?php echo $name ?>" class="field-<?php echo $name ?>">
+  <?php
 			foreach ( $options as $option_key => $option_label ) {
 				echo "<option
 				value='{$option_key}'
@@ -603,8 +588,8 @@ class Picture_It_Admin {
 				{$option_label}</option>";
 			}
 			?>
-        </select>
-		<?php
+</select>
+<?php
 	}
 
 	// add plugin action links
@@ -634,7 +619,9 @@ class Picture_It_Admin {
 	public function image_markup_alter( $the_content ) {
 		libxml_use_internal_errors(true);
 	    $post = new DOMDocument();
-	    $post->loadHTML($the_content);
+			if (!empty($the_content)) {
+	    	$post->loadHTML($the_content);
+			}
 	    $img_tags = $post->getElementsByTagName('img');
 
 	    foreach( $img_tags as $img) {
