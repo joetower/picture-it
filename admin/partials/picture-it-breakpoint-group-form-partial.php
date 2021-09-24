@@ -18,7 +18,7 @@
 					<div>
 						<label>Name</label>
 						<input type="text" name="pi_breakpoint_groups[<?php echo $key ?>][sizes][<?php echo $k ?>][name]" value="<?php echo $size['name'] ?>" class="field-pi-breakpoint-groups-size-name" />
-						<label>Width</label>
+						<label>Minimum Width (px)</label>
 						<input type="number" name="pi_breakpoint_groups[<?php echo $key ?>][sizes][<?php echo $k ?>][width]" value="<?php echo $size['width'] ?>" class="field-pi-breakpoint-groups-size-width" />
 					</div>
 				<?php } ?>
