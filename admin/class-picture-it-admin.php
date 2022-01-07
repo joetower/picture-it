@@ -477,7 +477,7 @@ class Picture_It_Admin {
 
 	public function markup_breakpoint_groups( $args ) {
 		$option  = $args['value'];
-		$default = [
+		$values = [
 			[
 				'name'  => '',
 				'sizes' => [
@@ -488,9 +488,8 @@ class Picture_It_Admin {
 				]
 			]
 		];
-		$values  = $option;
-		if ( $option == [] ) {
-			$values = $default;
+		if ( ! empty( $_GET['group']) && isset( $option[$_GET['group']] )) {
+			$values = $option[$_GET['group']];
 		}
 		foreach ( $values as $key => $data ) {
 			include 'partials/picture-it-breakpoint-group-form-partial.php';
