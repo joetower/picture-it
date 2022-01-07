@@ -19,12 +19,16 @@
             const childInputs = newRow.getElementsByTagName('input');
             for (let i = 0; i < childInputs.length; i++) {
                 childInputs[i].value = "";
-                childInputs[i].name = childInputs[i].name.replace(/(\d+)/, rowCount);
+                childInputs[i].name = childInputs[i].name.replace(/\d+(?!.*\d+)/, rowCount);
             }
             $sizeTable.append(newRow);
             rowCount++;
         });
     });
+
+    function addInputRow() {
+
+    }
 
 
 })(jQuery);

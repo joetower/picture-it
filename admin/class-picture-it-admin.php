@@ -224,6 +224,18 @@ class Picture_It_Admin {
 		);
 
 		add_settings_field(
+			'pi_existing_groups',
+			'',
+			[ $this, 'markup_existing_groups' ],
+			'pi-settings-page-bp-group',
+			'pi-breakpoint-group-section',
+			[
+				'name'  => 'pi_breakpoint_groups',
+				'value' => get_option( 'pi_breakpoint_groups' ),
+			]
+			);
+
+		add_settings_field(
 			'pi_image_size_select',
 			'Select Image Size',
 			[ $this, 'markup_select_fields_cb' ],
@@ -233,9 +245,7 @@ class Picture_It_Admin {
 				'name'    => 'pi_image_size_select',
 				'value'   => get_option( 'pi_image_size_select' ),
 				'options' => [
-					'group_1' => __( get_option( 'pi_image_size_name' ), 'picture-it' ),
-					'group_2' => __( get_option( 'pi_image_size_name2' ), 'picture-it' ),
-
+					'groups' => get_option( 'pi_breakpoint_groups' ),
 				],
 			]
 		);
@@ -484,6 +494,33 @@ class Picture_It_Admin {
 		}
 		foreach ( $values as $key => $data ) {
 			include 'partials/picture-it-breakpoint-group-form-partial.php';
+		}
+	}
+
+	// Display existing image sizes
+	public function markup_existing_groups( $args ) {
+		if ( ! empty( $args['value'] ) ) {
+			echo '<h3>Manage Existing Image Groups</h3>';
+			?>
+            <div class="pi-existing-groups">
+				<?php
+				$url = admin_url( 'options-general.php?page=picture-it&tab=breakpointgroup' );
+				foreach ( $args['value'] as $key => $value ) {
+					?>
+                    <div class="pi-image-size">
+                        <span class="image-size-name"><?php echo $value['name']; ?></span>
+                        <div class="pi-image-size-edit">
+                            <a href="<?php echo $url . '&group=' . $key ?>" class="size-edit">
+                                <span class="dashicons dashicons-edit"></span>
+                                <span class="pi-image-group-edit-label">Edit</span>
+                            </a>
+                        </div>
+                    </div>
+					<?php
+				}
+				?>
+            </div>
+			<?php
 		}
 	}
 
