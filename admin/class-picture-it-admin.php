@@ -236,17 +236,16 @@ class Picture_It_Admin {
 			);
 
 		add_settings_field(
-			'pi_image_size_select',
-			'Select Image Size',
-			[ $this, 'markup_select_fields_cb' ],
+			'pi_breakpoint_image_map',
+			'Select Breakpoint Group',
+			[ $this, 'markup_breakpoint_map' ],
 			'pi-settings-page-bp-map',
 			'pi-picture-mapping-section',
 			[
-				'name'    => 'pi_image_size_select',
-				'value'   => get_option( 'pi_image_size_select' ),
-				'options' => [
-					'groups' => get_option( 'pi_breakpoint_groups' ),
-				],
+				'name'    => 'pi_breakpoint_image_map',
+				'value'   => get_option( 'pi_breakpoint_image_map' ),
+				'groups' => get_option( 'pi_breakpoint_groups' ),
+				'image_sizes' => get_option( 'pi_image_sizes' ),
 			]
 		);
 	}
@@ -259,7 +258,7 @@ class Picture_It_Admin {
 			'pi_image_sizes',
 			[
 				'type'              => 'array',
-				'sanitize_callback' => [ $this, 'sanitize_image_size' ],
+				'sanitize_callback' => [ $this, 'sanitize_array_values' ],
 			]
 		);
 		register_setting(
@@ -267,29 +266,27 @@ class Picture_It_Admin {
 			'pi_breakpoint_groups',
 			[
 				'type'              => 'array',
-				'sanitize_callback' => [ $this, 'sanitize_breakpoint_groups' ],
+				'sanitize_callback' => [ $this, 'sanitize_array_values' ],
 			]
 		);
 		register_setting(
 			'pi-settings-page-bp-map',
-			'pi_image_size_select'
+			'pi_breakpoint_image_map',
+			[
+				'type'              => 'array',
+				'sanitize_callback' => [ $this, 'sanitize_array_values' ],
+			]
 		);
 	}
 
-	// Merging our options rather than just overriding.
-	public function sanitize_image_size( $args ) {
-		$option = get_option( 'pi_image_sizes', [] );
-		if ( $option == [] ) {
-			return $args;
-		}
-
-		// If we have existing values let's merge them and replace by name.
-		return array_replace( $option, $args );
-	}
-
-	// This will need to expand in the future so we'll duplicate it for now.
-	public function sanitize_breakpoint_groups( $args ) {
-		$option = get_option( 'pi_breakpoint_groups', [] );
+	/**
+	 * Helper function to make sure we are not losing previously saved values.
+	 * 
+	 * Also allows for us to actually deal with empty values.
+	 */
+	public function sanitize_array_values( $args ) {
+		$option_name = str_replace('sanitize_option_', '', current_filter());
+		$option = get_option( $option_name, [] );
 		if ( $option == [] ) {
 			return $args;
 		}
@@ -476,6 +473,7 @@ class Picture_It_Admin {
 	}
 
 	public function markup_breakpoint_groups( $args ) {
+		
 		$option  = $args['value'];
 		$values = [
 			[
@@ -488,8 +486,10 @@ class Picture_It_Admin {
 				]
 			]
 		];
-		if ( ! empty( $_GET['group']) && isset( $option[$_GET['group']] )) {
-			$values = $option[$_GET['group']];
+		if ( isset( $_GET['group']) && isset( $option[$_GET['group']] )) {
+			$values = [
+				$option[$_GET['group']]
+			];
 		}
 		foreach ( $values as $key => $data ) {
 			include 'partials/picture-it-breakpoint-group-form-partial.php';
@@ -535,6 +535,16 @@ class Picture_It_Admin {
 		return $sizes;
 	}
 
+
+	/**
+	 * Display the form for configuring Breakpoint Maps
+	 * 
+	 * @param $args array
+	 *   Default data for this tab. See $this->add_settings_field for values.
+	 */
+	public function markup_breakpoint_map( $args ) {
+		include 'partials/picture-it-breakpoint-map.php';
+	}
 
 	/**
 	 * @param $the_content
