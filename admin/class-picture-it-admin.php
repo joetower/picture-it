@@ -176,10 +176,8 @@ class Picture_It_Admin {
 
 		add_settings_section(
 			'pi-picture-mapping-section',
-			'Breakpoint Image Maps',
-			function () {
-				echo '<p>Map each custom image size (by name) to the appropriate breakpoint in which you would like it applied.</p>';
-			},
+			'',
+			'',
 			'pi-settings-page-bp-map'
 		);
 	}
@@ -233,11 +231,11 @@ class Picture_It_Admin {
 				'name'  => 'pi_breakpoint_groups',
 				'value' => get_option( 'pi_breakpoint_groups' ),
 			]
-			);
+		);
 
 		add_settings_field(
 			'pi_breakpoint_image_map',
-			'Select Breakpoint Group',
+			'',
 			[ $this, 'markup_breakpoint_map' ],
 			'pi-settings-page-bp-map',
 			'pi-picture-mapping-section',
@@ -535,15 +533,20 @@ class Picture_It_Admin {
 		return $sizes;
 	}
 
-
 	/**
-	 * Display the form for configuring Breakpoint Maps
+	 * Display the form for configuring Breakpoint Maps Form
 	 * 
 	 * @param $args array
 	 *   Default data for this tab. See $this->add_settings_field for values.
 	 */
 	public function markup_breakpoint_map( $args ) {
-		include 'partials/picture-it-breakpoint-map.php';
+		if ( isset( $_GET['group'] ) ) {
+			$group_id = $_GET['group'];
+			$group = $args['groups'][$group_id];
+			if ( ! empty( $group['sizes'] ) ) {
+				include 'partials/picture-it-breakpoint-group-map.php';
+			}
+		}
 	}
 
 	/**

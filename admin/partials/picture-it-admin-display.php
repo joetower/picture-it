@@ -37,6 +37,7 @@
       class="nav-tab <?php if($tab==='breakpointmap'):?>nav-tab-active<?php endif; ?>">Breakpoint Image Mapping</a>
   </nav>
   <div class="tab-content">
+    <?php if ( 'breakpointmap' == $tab ): include __DIR__ . '/picture-it-breakpoint-map-select.php'; endif; ?>
     <form method="post" action="options.php">
       <?php switch($tab) :
         case 'breakpointgroup':
