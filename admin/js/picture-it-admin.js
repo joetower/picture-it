@@ -26,9 +26,4 @@
         });
     });
 
-    function addInputRow() {
-
-    }
-
-
 })(jQuery);
