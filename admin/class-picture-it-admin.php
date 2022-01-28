@@ -550,28 +550,9 @@ class Picture_It_Admin {
 	}
 
 	/**
-	 * @param $the_content
-	 *
-	 * @see: https://jhtechservices.com/changing-your-image-markup-in-wordpress/
+	 * Registering the block type definition.
 	 */
-	public function image_markup_alter( $the_content ) {
-		libxml_use_internal_errors( true );
-		$post = new DOMDocument();
-		if ( ! empty( $the_content ) ) {
-			$post->loadHTML( $the_content );
-		}
-		$img_tags = $post->getElementsByTagName( 'img' );
-
-		foreach ( $img_tags as $img ) {
-			$pict = $post->createElement( 'picture' );
-			$pict->setAttribute( 'class', 'pi-image' );
-			$source = $post->createElement( 'source' );
-			$source->setAttribute( 'srcset', $img->getAttribute( 'srcset' ) );
-			$pict->appendChild( $source );
-			$img->parentNode->appendChild( $pict );
-			$pict->appendChild( $img );
-		}
-
-		return $post->saveHTML();
+	public function register_blocks() {
+		register_block_type( PICTURE_IT_BASE_DIR );
 	}
 }

@@ -1,0 +1,29 @@
+{
+ "name": "picture-it",
+ "version": "1.0.0",
+ "description": "Picture It Plugin",
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/joetower/picture-it.git"
+ },
+ "author": "@joetower,@mikeethedude",
+ "license": "GPL-2.0-or-later",
+ "bugs": {
+  "url": "https://github.com/joetower/picture-it/issues"
+ },
+ "homepage": "https://github.com/joetower/picture-it#readme",
+ "main": "build/index.js",
+ "devDependencies": {
+  "@wordpress/block-editor": "^7.0.2",
+  "@wordpress/blocks": "^11.1.0",
+  "@wordpress/i18n": "^4.2.2",
+  "@wordpress/scripts": "^18.0.1"
+ },
+ "scripts": {
+  "build": "wp-scripts build",
+  "format:js": "wp-scripts format-js",
+  "lint:js": "wp-scripts lint-js",
+  "packages-update": "wp-scripts packages-update",
+  "start": "wp-scripts start"
+ }
+}
